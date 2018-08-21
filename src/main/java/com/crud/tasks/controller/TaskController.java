@@ -22,16 +22,16 @@ public class TaskController {
         return new TaskDto(1L, "Test title", "Test_content");
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete")
     public void deleteTask(Long taskId) {
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
+    @RequestMapping(method = RequestMethod.PUT, value = "update")
     public TaskDto updateTask(TaskDto taskDto) {
         return new TaskDto(1L, "Edited test title", "Test content");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createTask")
+    @RequestMapping(method = RequestMethod.POST, value = "create")
     public void createTask(TaskDto taskDto) {
     }
 }
