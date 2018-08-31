@@ -4,7 +4,11 @@ import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -29,15 +33,15 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "delete")
-    public void deleteTask(@RequestParam Long id) throws TaskNotFoundException {
-       try {
-           dbService.deleteTask(id);
-       } catch (Exception e) {
-           throw new TaskNotFoundException() ;
-       }
+    public boolean deleteTask(@RequestParam Long id) throws NothingToDeleteException {
+        if (dbService.exist(id)) {
+            dbService.deleteTask(id);
+            return true;
+        }
+           throw new NothingToDeleteException() ;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "update")
+    @RequestMapping(method = RequestMethod.PUT, value = "update", consumes = APPLICATION_JSON_VALUE)
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
