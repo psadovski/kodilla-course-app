@@ -36,10 +36,14 @@ public class DbService {
 
     @Transactional
     public Task updateTask(final Long id, final Task task) {
-        Task updatedTask = getTask(id).get();
-        updatedTask.setTitle(task.getTitle());
-        updatedTask.setContent(task.getContent());
+        if (getTask(id).isPresent()) {
+            Task updatedTask = getTask(id).get();
+            updatedTask.setTitle(task.getTitle());
+            updatedTask.setContent(task.getContent());
 
-        return repository.save(updatedTask);
+            return repository.save(updatedTask);
+        }
+
+        return null;
     }
 }
