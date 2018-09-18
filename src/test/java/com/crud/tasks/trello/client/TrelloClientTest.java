@@ -98,8 +98,9 @@ public class TrelloClientTest {
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
 
         //When
-        List<TrelloBoardDto> actual = trelloClient.getTrelloBoards();
-        List<TrelloBoardDto> expected = new ArrayList<>();
+        List<TrelloBoardDto> fetchedTrelloBoard = trelloClient.getTrelloBoards();
+        int expected = 0;
+        int actual = fetchedTrelloBoard.size();
 
         //Then
         assertEquals(expected, actual);
