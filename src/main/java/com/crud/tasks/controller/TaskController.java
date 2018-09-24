@@ -50,7 +50,6 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST, value = "create", consumes = APPLICATION_JSON_VALUE)
     public Long createTask(@RequestBody TaskDto taskDto) {
-        dbService.saveTask(taskMapper.mapToTask(taskDto));
         return dbService.saveTask(taskMapper.mapToTask(taskDto)).getId();
     }
 }
