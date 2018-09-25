@@ -34,4 +34,8 @@ dependencies {
     compile('org.apache.commons:commons-lang3:3.0')
     compile('commons-validator:commons-validator:1.4.0')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    //Swagger
+    compile('io.springfox:springfox-swagger2:2.7.0')
+    compile('io.springfox:springfox-swagger-ui:2.7.0')
 }
