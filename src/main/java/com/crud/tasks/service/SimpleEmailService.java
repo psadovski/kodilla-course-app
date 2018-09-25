@@ -37,10 +37,8 @@ public class SimpleEmailService {
             mailMessage.setTo(mail.getMailTo());
         }
 
-        if (StringUtils.isNotBlank(mail.getToCc())) {
-            if (EmailValidator.getInstance().isValid(mail.getToCc())) {
-                mailMessage.setCc(mail.getToCc());
-            }
+        if (StringUtils.isNotBlank(mail.getToCc()) && EmailValidator.getInstance().isValid(mail.getToCc())) {
+            mailMessage.setCc(mail.getToCc());
         }
 
         mailMessage.setSubject(mail.getSubject());
