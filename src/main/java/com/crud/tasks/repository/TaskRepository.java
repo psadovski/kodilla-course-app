@@ -13,4 +13,5 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     Task save(Task task);
     Optional<Task> deleteById(Long id);
     boolean existsById(Long id);
+    long count();
 }
