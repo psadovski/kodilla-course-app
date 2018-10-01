@@ -5,6 +5,7 @@ import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,8 +35,8 @@ public class TaskController {
         return taskMapper.mapToTaskDto(dbService.getTask(id).orElseThrow(TaskNotFoundException::new));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "delete")
-    public boolean deleteTask(@RequestParam Long id) throws NothingToDeleteException {
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete/{id}")
+    public boolean deleteTask(@PathVariable("id") final Long id) throws NothingToDeleteException {
         if (dbService.exist(id)) {
             dbService.deleteTask(id);
             return true;
