@@ -6,7 +6,6 @@ import com.crud.tasks.domain.TrelloCard;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.domain.TrelloList;
 import com.crud.tasks.domain.TrelloListDto;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +25,7 @@ public class TrelloMapperTestSuite {
     private TrelloMapper trelloMapper;
 
     @Test
-    public void testMapToBoard() {
+    public void testBoardDtoToBoard() {
         //Given
         List<TrelloListDto> trelloListDto = new ArrayList<>();
         trelloListDto.add(new TrelloListDto("1", "List 1", true));
@@ -44,7 +44,7 @@ public class TrelloMapperTestSuite {
     }
 
     @Test
-    public void testMapToBoardDto() {
+    public void testBoardToBoardDto() {
         //Given
         List<TrelloList> trelloList = new ArrayList<>();
         trelloList.add(new TrelloList("1", "List 1", true));
@@ -63,7 +63,7 @@ public class TrelloMapperTestSuite {
     }
 
     @Test
-    public void testMapToList() {
+    public void testListDtoToList() {
         //Given
         List<TrelloListDto> trelloListDto = new ArrayList<>();
         trelloListDto.add(new TrelloListDto("1", "List 1", true));
@@ -79,7 +79,7 @@ public class TrelloMapperTestSuite {
     }
 
     @Test
-    public void testMapToListDto() {
+    public void testListToListDto() {
         //Given
         List<TrelloList> trelloList = new ArrayList<>();
         trelloList.add(new TrelloList("1", "List 1", true));
@@ -95,7 +95,7 @@ public class TrelloMapperTestSuite {
     }
 
     @Test
-    public void testMapToCardDto() {
+    public void testCardToCardDto() {
         //Given
         TrelloCard card = new TrelloCard("Card", "Content", "Top", "1");
 
@@ -103,14 +103,11 @@ public class TrelloMapperTestSuite {
         TrelloCardDto trelloCardDto = trelloMapper.mapToCardDto(card);
 
         //Then
-        Assert.assertEquals("Card", trelloCardDto.getName());
-        Assert.assertEquals("Content", trelloCardDto.getDescription());
-        Assert.assertEquals("Top", trelloCardDto.getPos());
-        Assert.assertEquals("1", trelloCardDto.getListId());
+        assertThat(card).isEqualToComparingFieldByField(trelloCardDto);
     }
 
     @Test
-    public void testMapToCard() {
+    public void testCardDtoToCard() {
         //Given
         TrelloCardDto cardDto = new TrelloCardDto("Card", "Content", "Top", "1");
 
@@ -118,9 +115,6 @@ public class TrelloMapperTestSuite {
         TrelloCard trelloCard = trelloMapper.mapToCard(cardDto);
 
         //Then
-        Assert.assertEquals("Card", trelloCard.getName());
-        Assert.assertEquals("Content", trelloCard.getDescription());
-        Assert.assertEquals("Top", trelloCard.getPos());
-        Assert.assertEquals("1", trelloCard.getListId());
+        assertThat(cardDto).isEqualToComparingFieldByField(trelloCard);
     }
 }

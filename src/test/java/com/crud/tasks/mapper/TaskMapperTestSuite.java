@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -20,7 +21,7 @@ public class TaskMapperTestSuite {
     private TaskMapper taskMapper;
 
     @Test
-    public void testMapToTask() {
+    public void testTaskDtoToTask() {
         //Given
         TaskDto taskDto = new TaskDto(1L, "Task 1", "Content 1");
 
@@ -28,13 +29,11 @@ public class TaskMapperTestSuite {
         Task task = taskMapper.mapToTask(taskDto);
 
         //Then
-        assertEquals((Long)1L, task.getId());
-        assertEquals("Task 1", task.getTitle());
-        assertEquals("Content 1", task.getContent());
+        assertThat(taskDto).isEqualToComparingFieldByField(task);
     }
 
     @Test
-    public void testMapToTaskWhenTaskDtoIsNull() {
+    public void testTaskDtoToTaskWhenTaskDtoIsNull() {
         //Given
         TaskDto taskDto = null;
 
@@ -46,7 +45,7 @@ public class TaskMapperTestSuite {
     }
 
     @Test
-    public void testMapToTaskDto() {
+    public void testTaskToTaskDto() {
         //Given
         Task task = new Task(1L, "Task 1", "Content 1");
 
@@ -54,13 +53,11 @@ public class TaskMapperTestSuite {
         TaskDto taskDto = taskMapper.mapToTaskDto(task);
 
         //Then
-        assertEquals((Long)1L, taskDto.getId());
-        assertEquals("Task 1", taskDto.getTitle());
-        assertEquals("Content 1", taskDto.getContent());
+        assertThat(task).isEqualToComparingFieldByField(taskDto);
     }
 
     @Test
-    public void testMapToTaskDtoWhenTaskIsNull() {
+    public void testTaskToTaskDtoWhenTaskIsNull() {
         //Given
         Task task = null;
 
@@ -72,7 +69,7 @@ public class TaskMapperTestSuite {
     }
 
     @Test
-    public void testMapToTaskDtoList() {
+    public void testTaskListToTaskDtoList() {
         //Given
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task(1L, "Title 1", "Content 1"));
@@ -82,12 +79,12 @@ public class TaskMapperTestSuite {
 
         //Then
         assertEquals(1, taskDtoList.size());
-        assertEquals((Long)1L, taskDtoList.get(0).getId());
+        assertThat(taskDtoList.get(0).getId()).isEqualTo(1L);
         assertEquals("Title 1", taskDtoList.get(0).getTitle());
         assertEquals("Content 1", taskDtoList.get(0).getContent());
     }
 
-    public void testMapToTaskDtoListWhenTaskListIsNull() {
+    public void testTaskListToTaskDtoListWhenTaskListIsNull() {
         //Given
         List<Task> taskList = null;
 
