@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -79,9 +80,7 @@ public class TaskMapperTestSuite {
 
         //Then
         assertEquals(1, taskDtoList.size());
-        assertThat(taskDtoList.get(0).getId()).isEqualTo(1L);
-        assertEquals("Title 1", taskDtoList.get(0).getTitle());
-        assertEquals("Content 1", taskDtoList.get(0).getContent());
+        assertThat(taskDtoList.equals(Arrays.asList(new Task(1L, "Title 1", "Content 1")))).isTrue();
     }
 
     public void testTaskListToTaskDtoListWhenTaskListIsNull() {

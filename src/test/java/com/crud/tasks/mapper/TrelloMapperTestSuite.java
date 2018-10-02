@@ -12,11 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrelloMapperTestSuite {
@@ -73,9 +73,7 @@ public class TrelloMapperTestSuite {
 
         //Then
         assertEquals(1, trelloList.size());
-        assertEquals("1", trelloList.get(0).getId());
-        assertEquals("List 1", trelloList.get(0).getName());
-        assertTrue(trelloList.get(0).isClosed());
+        assertThat(trelloList.equals(Arrays.asList(new TrelloListDto("1", "List 1", true)))).isTrue();
     }
 
     @Test
@@ -89,9 +87,7 @@ public class TrelloMapperTestSuite {
 
         //Then
         assertEquals(1, trelloListDto.size());
-        assertEquals("1", trelloListDto.get(0).getId());
-        assertEquals("List 1", trelloListDto.get(0).getName());
-        assertTrue(trelloListDto.get(0).isClosed());
+        assertThat(trelloListDto.equals(Arrays.asList(new TrelloList("1", "List 1", true)))).isTrue();
     }
 
     @Test
