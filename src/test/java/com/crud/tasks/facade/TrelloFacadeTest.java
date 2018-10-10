@@ -1,9 +1,15 @@
 package com.crud.tasks.facade;
 
+import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.domain.TrelloBoard;
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCard;
+import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.domain.TrelloList;
 import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.card.TrelloCardAttachmentsByType;
+import com.crud.tasks.domain.card.TrelloCardBadges;
+import com.crud.tasks.domain.card.TrelloCardTrello;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.facade.TrelloFacade;
@@ -38,7 +44,7 @@ public class TrelloFacadeTest {
     private TrelloMapper trelloMapper;
 
     @Test
-    public void shouldFetchEmtyList() {
+    public void shouldFetchEmptyList() {
         //Given
         List<TrelloListDto> trelloLists = new ArrayList<>();
         trelloLists.add(new TrelloListDto("1", "test_list", false));
@@ -52,12 +58,12 @@ public class TrelloFacadeTest {
         List<TrelloBoard> mappedTrelloBoards = new ArrayList<>();
         mappedTrelloBoards.add(new TrelloBoard("1", "test", mappedTrelloLists));
 
+        //When
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoard(trelloBoards)).thenReturn(mappedTrelloBoards);
         when(trelloMapper.mapToBoardDto(anyList())).thenReturn(new ArrayList<>());
         when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(new ArrayList<>());
 
-        //When
         List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
 
         //Then
@@ -80,12 +86,12 @@ public class TrelloFacadeTest {
         List<TrelloBoard> mappedTrelloBoards = new ArrayList<>();
         mappedTrelloBoards.add(new TrelloBoard("1", "my_task", mappedTrelloLists));
 
+        //When
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoard(trelloBoards)).thenReturn(mappedTrelloBoards);
         when(trelloMapper.mapToBoardDto(anyList())).thenReturn(trelloBoards);
         when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(mappedTrelloBoards);
 
-        //When
         List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
 
         //Then
@@ -102,5 +108,31 @@ public class TrelloFacadeTest {
                 assertEquals(false, trelloListDto.isClosed());
             });
         });
+    }
+
+    @Test
+    public void createCardTest() {
+        //Given
+        TrelloCard trelloCard = new TrelloCard("Task","Content","Top","1");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("Task", "Content", "Top", "1");
+
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
+                "1",
+                "name",
+                "http://test.com",
+                new TrelloCardBadges(
+                        1,
+                        new TrelloCardAttachmentsByType(
+                                new TrelloCardTrello(1, 1))));
+
+        //When
+        when(trelloMapper.mapToCard(trelloCardDto)).thenReturn(trelloCard);
+        when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(trelloCardDto);
+        when(trelloService.createdTrelloCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
+
+        CreatedTrelloCardDto createCard = trelloFacade.createCard(trelloCardDto);
+
+        //Then
+        assertEquals(createdTrelloCardDto,createCard);
     }
 }
