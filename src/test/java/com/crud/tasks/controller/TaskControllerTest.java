@@ -33,8 +33,7 @@ public class TaskControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private TaskMapper taskMapper;
+    private TaskMapper taskMapper = new TaskMapper();
 
     @MockBean
     private DbService dbService;

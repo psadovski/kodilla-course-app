@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Component("taskMapper")
 public class TaskMapper {
     public Task mapToTask(final TaskDto taskDto) {
         if (taskDto == null) {
