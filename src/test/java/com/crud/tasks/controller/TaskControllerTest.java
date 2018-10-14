@@ -20,6 +20,8 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,7 +63,6 @@ public class TaskControllerTest {
         taskList.add(new Task(1L, "Test name", "Test description"));
 
         when(dbService.getAllTasks()).thenReturn(taskList);
-        taskMapper.mapToTaskDtoList(dbService.getAllTasks());
 
         //When & Then
         mockMvc.perform(get("/v1/task/getTasks")
@@ -96,21 +97,26 @@ public class TaskControllerTest {
         //Given
         TaskDto taskDto = new TaskDto(1L, "Test name", "Test description");
         Task task = taskMapper.mapToTask(taskDto);
-        when(dbService.saveTask(task)).thenReturn(task);
-        when(dbService.saveTask(task).getId()).thenReturn(task.getId());
+
+        when(dbService.saveTask(any())).thenReturn(task);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
 
         //When & Then
         mockMvc.perform(post("/v1/task/create")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonContent)
                 .characterEncoding("UTF-8"))
                 .andExpect(status().is(200));
-        verify(dbService, times(1)).saveTask(task);
+        verify(dbService, times(1)).saveTask(any());
     }
 
     @Test
     public void testDeleteTask() throws Exception {
         //Given
         Task task = new Task(1L, "Test name", "Test description");
+
         when(dbService.exist(task.getId())).thenReturn(true);
 
         //When & Then
@@ -126,8 +132,7 @@ public class TaskControllerTest {
         TaskDto taskDto = new TaskDto(1L, "Test name", "Test description");
         Task task = taskMapper.mapToTask(taskDto);
 
-        when(dbService.updateTask(task.getId(), task)).thenReturn(task);
-        taskMapper.mapToTaskDto(dbService.updateTask(task.getId(), task));
+        when(dbService.updateTask(eq(task.getId()), any())).thenReturn(task);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskDto);
