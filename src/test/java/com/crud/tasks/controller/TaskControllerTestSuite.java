@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,7 +32,7 @@ public class TaskControllerTestSuite {
     @Mock
     private DbService dbService;
 
-    @Mock
+    @Spy
     private TaskMapper taskMapper;
 
     @Test
@@ -37,8 +40,6 @@ public class TaskControllerTestSuite {
         //Given
         //When
         when(dbService.getAllTasks()).thenReturn(new ArrayList<>());
-        taskMapper.mapToTaskDtoList(dbService.getAllTasks());
-
         List<TaskDto> tasks = taskController.getTasks();
 
         //Then
@@ -54,8 +55,6 @@ public class TaskControllerTestSuite {
 
         //When
         when(dbService.getAllTasks()).thenReturn(taskList);
-        taskMapper.mapToTaskDtoList(dbService.getAllTasks());
-
         List<TaskDto> tasks = taskController.getTasks();
 
         //Then
@@ -70,8 +69,6 @@ public class TaskControllerTestSuite {
 
         //When
         when(dbService.getTask(1L)).thenReturn(Optional.of(task));
-        taskMapper.mapToTaskDto(dbService.getTask(1L).orElseThrow(TaskNotFoundException::new));
-
         TaskDto actual = taskController.getTask(1L);
 
         //Then
@@ -101,9 +98,7 @@ public class TaskControllerTestSuite {
         Task task = new Task(1L, "Test name", "Test description");
 
         //When
-        when(dbService.updateTask(1L, taskMapper.mapToTask(taskDto))).thenReturn(task);
-        taskMapper.mapToTaskDto(dbService.updateTask(1L, taskMapper.mapToTask(taskDto)));
-
+        when(dbService.updateTask(eq(1L), any())).thenReturn(task);
         TaskDto actual = taskController.updateTask(1L, taskDto);
 
         //Then
