@@ -1,5 +1,6 @@
 package com.crud.tasks.config;
 
+import com.crud.tasks.mapper.TaskMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -24,6 +25,11 @@ import java.util.List;
 @EnableSwagger2
 @Configuration
 public class CoreConfiguration implements WebMvcConfigurer {
+
+    @Bean
+    public TaskMapper taskMapper() {
+        return new TaskMapper();
+    }
 
     @Bean
     public RestTemplate restTemplate() {

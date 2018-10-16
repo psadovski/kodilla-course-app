@@ -33,6 +33,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
     compile('org.apache.commons:commons-lang3:3.0')
     compile('commons-validator:commons-validator:1.4.0')
+    compile('com.google.code.gson:gson:2.8.5')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     //Swagger
