@@ -7,14 +7,9 @@
 <body>
     <h1>First impression of my page</h1>
 
-    <!--/*@thymesVar id="variable" type="com.crud.tasks.controller.StaticWebPageController"*/-->
     <span th:text="${variable}"></span>
 
     <br>
-
-    <!--/*@thymesVar id="one" type="com.crud.tasks.controller.StaticWebPageController"*/-->
-    <!--/*@thymesVar id="two" type="com.crud.tasks.controller.StaticWebPageController"*/-->
-    <!--/*@thymesVar id="three" type="com.crud.tasks.controller.StaticWebPageController"*/-->
     <span th:text="${two} + '*' + ${two} + '=' + (${two} * ${two})"></span>
     <br>
     <span th:text="${two} + '*' + ${two} + '+' ${two} + '=' + (${two} * ${two} + ${two})"></span>
