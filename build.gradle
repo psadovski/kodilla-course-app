@@ -37,9 +37,6 @@ dependencies {
     compile('com.google.code.gson:gson:2.8.5')
     compile('org.thymeleaf:thymeleaf:3.0.10.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf:2.0.6.RELEASE')
-
-
-
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     //Swagger
