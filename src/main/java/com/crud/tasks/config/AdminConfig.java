@@ -14,12 +14,12 @@ public class AdminConfig {
     @Value("${admin.name}")
     private String adminName;
 
-    @Value("${company.name}")
+    @Value("${info.company.name}")
     private String companyName;
 
-    @Value("{company.email}")
+    @Value("${info.company.email}")
     private String companyMail;
 
-    @Value("{company.phone}")
+    @Value("${info.company.phone}")
     private String companyPhone;
 }

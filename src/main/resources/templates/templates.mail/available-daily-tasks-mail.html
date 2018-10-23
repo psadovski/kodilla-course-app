@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Trello Card</title>
+    <title>Daily Tasks</title>
     <style>
 
         @media only screen and (max-width: 620px) {
@@ -84,7 +84,7 @@
         <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"> </td>
         <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
             <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
-                <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">PREVIEW_MESSAGE</span>
+                <span th:text="${preview_message}" class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;"></span>
                 <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
                     <tr>
                         <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
@@ -92,9 +92,15 @@
                                 <tr>
                                     <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                                         <p th:if="${is_friend}" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                                            Yo <span th:text="${admin_config.getAdminName()}"></span>,</p>
+                                            Hello <span th:text="${admin_config.getAdminName()}"></span>,</p>
                                         <p th:unless="${is_friend}" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
                                             Dear <span th:text="${admin_config.getAdminName()}"></span>,</p>
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            Application functionality:
+                                        </p>
+                                        <ul th:each="function : ${application_functionality}">
+                                            <li th:text="${function}"></li>
+                                        </ul>
                                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;" th:text="${message}"></p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                                             <tbody>
@@ -111,14 +117,10 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                                            Application functionality:
-                                        </p>
-                                        <ul th:each="function : ${application_functionality}">
-                                            <li th:text="${function}"></li>
-                                        </ul>
-
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"th:text="${goodbye_message}"></p>
+                                        <p th:if="${is_friend}" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            See you <span th:text="${admin_config.getAdminName()}"></span>,</p>
+                                        <p th:unless="${is_friend}" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            Yours faithfully <span th:text="${admin_config.getAdminName()}"></span>,</p>
                                     </td>
                                 </tr>
                             </table>
@@ -130,9 +132,9 @@
                         <tr>
                             <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                                 <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">
-                                    <br> Company name: <span th:text="${company_name}"></span>
-                                    <br> Mail: <span th:text="${company_mail}"></span>
-                                    <br> Phone: <span th:text="${company_phone}"></span>
+                                    <br> Company name: <span th:text="${admin_config.getCompanyName()}"></span>
+                                    <br> Mail: <span th:text="${admin_config.getAdminMail()}"></span>
+                                    <br> Phone: <span th:text="${admin_config.getCompanyPhone()}"></span>
                                 </span>
                             </td>
                         </tr>
