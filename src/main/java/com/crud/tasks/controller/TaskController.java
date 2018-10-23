@@ -35,12 +35,9 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "delete")
-    public boolean deleteTask(@RequestParam Long id) throws NothingToDeleteException {
-        if (dbService.exist(id)) {
-            dbService.deleteTask(id);
-            return true;
-        }
-           throw new NothingToDeleteException() ;
+    public boolean deleteTask(@RequestParam Long id) {
+        dbService.deleteTask(id);
+        return true;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "update", consumes = APPLICATION_JSON_VALUE)

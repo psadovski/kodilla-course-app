@@ -14,6 +14,8 @@ public class DbService {
     @Autowired
     private TaskRepository repository;
 
+    private DbService dbService;
+
     public List<Task> getAllTasks() {
         return repository.findAll();
     }
@@ -26,8 +28,12 @@ public class DbService {
         return repository.save(task);
     }
 
+    @Transactional
     public Optional<Task> deleteTask(Long id) {
-        return repository.deleteById(id);
+        if (dbService.exist(id)) {
+            return repository.deleteById(id);
+        }
+        return null;
     }
 
     public boolean exist(final Long id) {
