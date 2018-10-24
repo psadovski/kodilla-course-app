@@ -35,7 +35,6 @@ dependencies {
     compile('org.apache.commons:commons-lang3:3.0')
     compile('commons-validator:commons-validator:1.4.0')
     compile('com.google.code.gson:gson:2.8.5')
-    //compile('org.thymeleaf:thymeleaf:3.0.9.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

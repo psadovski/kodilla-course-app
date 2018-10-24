@@ -30,7 +30,7 @@ public class DbService {
 
     @Transactional
     public Optional<Task> deleteTask(Long id) {
-        if (dbService.exist(id)) {
+        if (exist(id)) {
             return repository.deleteById(id);
         }
         return null;
