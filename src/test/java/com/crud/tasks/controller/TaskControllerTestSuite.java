@@ -59,7 +59,7 @@ public class TaskControllerTestSuite {
 
         //Then
         assertNotNull(tasks);
-        assertThat(tasks.size()).isEqualTo(1);
+        assertThat(tasks.get(0)).isEqualToComparingFieldByField(new TaskDto(1L, "Test name", "Test description"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TaskControllerTestSuite {
         Task task = new Task(1L, "Test name", "Test description");
 
         //When
-        when(dbService.getTask(1L)).thenReturn(Optional.of(task));
+        when(dbService.getTask(eq(1L))).thenReturn(Optional.of(task));
         TaskDto actual = taskController.getTask(1L);
 
         //Then
