@@ -14,6 +14,8 @@ public class DbService {
     @Autowired
     private TaskRepository repository;
 
+    private DbService dbService;
+
     public List<Task> getAllTasks() {
         return repository.findAll();
     }
